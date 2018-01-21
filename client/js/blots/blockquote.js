@@ -1,3 +1,5 @@
+import Quill from 'quill';
+
 let Block = Quill.import('blots/block');
 
 class Blockquote extends Block {}

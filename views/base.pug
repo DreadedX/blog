@@ -1,18 +1,55 @@
 doctype html
 html
 	head
-		title "HIER KOMT DE TITEL"
+		title=title
 
 		link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
 		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/css/materialize.min.css")
-
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		link(rel="stylesheet", href="/css/style.css")
 
 		block header
 
-	body
-		block content
+		meta(charset="UTF-8")
+		if (metatags)
+			each content, name in metatags
+				meta(name=name, content=content)
 
-		script(type="text/javascript", src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/js/materialize.min.js")
+	body
+		main
+			nav.orange(role="navigation")
+				.nav-wrapper.container
+					a.brand-logo(href="#!") Blog
+					ul.right.hide-on-med-and-down
+						li
+							a(href="/home") Home
+						li
+							a(href="/blog") Blog
+
+					ul.sidenav#mobile
+						li
+							a(href="/home") Home
+						li
+							a(href="/blog") Blog
+
+					a.sidenav-trigger(href="#", data-target="mobile")
+						i.material-icons menu
+
+			block content
+
+		footer.page-footer.orange
+			.container
+				.row
+					.col.l6.s12
+						h5.white-text Footer content
+						p.grey-text.text-lighten-4 Hier komt een beetje tekst
+			.footer-copyright
+				.container
+					| &copy; 2018 Tim Huizinga
+					a.grey-text.text-lighten-4.right(href='https://mtgames.nl') Made with #[i.material-icons.tiny.red-text.text-darken-2 favorite] by Tim Huzinga
+
+		script(type="text/javascript", src="/js/bundle.js")
+		script.
+			var M = require('materialize-css');
+			M.Sidenav.init(document.querySelector('.sidenav'));
 
 		block scripts

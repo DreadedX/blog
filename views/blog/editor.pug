@@ -1,43 +1,49 @@
 extends ../base
 
 block header
-	link(rel="stylesheet", href="https://cdn.quilljs.com/1.3.4/quill.core.css")
+	// link(rel="stylesheet", href="https://cdn.quilljs.com/1.3.4/quill.core.css")
+	link(rel="stylesheet", href="/css/editor.css")
 
 block content
-	header
-		nav
-			.nav-wrapper
-				.col.s12
-					a.sidenav-trigger(href="#", data-target="mobile")
-						i.material-icons menu
-					a.brand-logo(href="#!") Blog
-					ul.right.hide-on-med-and-down
-						li
-							a(href="/home") Home
-						li
-							a(href="/blog") Blog
-					ul.sidenav#mobile
-						li
-							a(href="/home") Home
-						li
-							a(href="/blog") Blog
-
-	main
-		.container
+	.container
+		.section
 			.row
-				.input-field.col.l6.offset-l3.s12
+				.input-field.col.l7.s12
 					input.validate#title(type="text")
-					label(for="title") TITEL
+					label(for="title") Title
+				.input-field.col.l3.s9
+					input.datepicker#date(type="text" readonly)
+					label(for="date") Publish on
+				.input-field.col.l1.s2
+					input.timepicker#time(type="text" readonly)
+					label(for="time") At
+				.col.s1.valign-wrapper
+					p
+						label
+							input.filled-in(type="checkbox", checked="checked")
+							span 
 
-				.input-field.col.s12#editor
+				.col.l8.offset-l2.s12.card
+					.card-content
+						span.card-title Title
+						#editor(placeholder="test")
+					.card-action
+						i#card-date Zaterdag, 20 januari 2018
+						i , 
+						i#card-time 18:30
 
-				.fixed-action-btn.toolbar#fab
-					a.btn-floating.btn-large.orange
-						i.large.material-icons text_format
-					ul
+			.fixed-action-btn.toolbar#fab
+				a.btn-floating.btn-large.blue
+					i.large.material-icons mode_edit
+				ul#toolbar
+					if (toolbar)
+						each item in toolbar
+							li.waves-effect.waves-light
+								a(href="#!").toolbar-item(data-name=item.name, data-handler=item.handler)
+									i.material-icons=item.icon_name
 
-	footer
+			.spacer
 
 block scripts
-	script(type="text/javascript", src="https://cdn.quilljs.com/1.3.4/quill.core.js")
+	script(type="text/javascript", src="/js/quill.js")
 	script(type="text/javascript", src="/js/editor.js")

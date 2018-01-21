@@ -1,3 +1,5 @@
+import Quill from 'quill';
+
 let Inline = Quill.import('blots/inline');
 
 class Italic extends Inline {}
