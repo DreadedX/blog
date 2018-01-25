@@ -1,4 +1,5 @@
 import Quill from 'quill';
+import Delta from 'quill-delta';
 // This is imported by the page
 // import M from 'materialize-css'
 
@@ -15,11 +16,6 @@ Quill.register(Underline);
 Quill.register(Strike);
 Quill.register(Blockquote);
 Quill.register(Link);
-
-// let Block = Quill.import('blots/block');
-// Block.tagName = 'div';
-// Block.className = 'flow-text'
-// Quill.register(Block);
 
 const quill = new Quill('#editor');
 const toolbar = document.querySelector('#toolbar');
@@ -103,3 +99,25 @@ M.FloatingActionButton.init(fab, {
 }).open();
 
 quill.focus();
+
+let xhr = new XMLHttpRequest();
+xhr.responseType = 'json';
+xhr.open("POST", "/api");
+xhr.setRequestHeader("Content-Type", "application/json");
+xhr.setRequestHeader("Accept", "application/json");
+xhr.onload = function () {
+  console.log('Title:', xhr.response.data.post.title);
+  console.log('Content:', xhr.response.data.post.content);
+  console.log('Id:', xhr.response.data.post.id);
+}
+xhr.send(JSON.stringify({
+	query: `query ($id: String!) {
+		post: getBlogPost(id: $id) {
+			id
+			title
+			content
+		}
+	}`, variables: {
+		id: "5a679e1016ad083d8b3d9bd4"
+	}
+}));

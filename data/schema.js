@@ -7,18 +7,20 @@ var schema = buildSchema(`
 	}
 
 	type BlogPost {
-		id: Int!
+		id: String!
 		title: String
 		content: String
+		image: String
 	}
 
 	type Query {
-		getBlogPost(id: Int!): BlogPost
+		getBlogPost(id: String!): BlogPost
+		getBlogPosts: [BlogPost]
 	}
 
 	type Mutation {
 		createBlogPost(input: BlogPostInput!): BlogPost
-		updateBlogPost(id: Int!, input: BlogPostInput!): BlogPost
+		updateBlogPost(id: String!, input: BlogPostInput!): BlogPost
 	}
 `);
 

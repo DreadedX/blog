@@ -1,0 +1,35 @@
+extends ../base
+
+block content
+	.parallax
+	.container
+		.row
+			.col.s12.cards-container
+				for post in posts
+					.card.z-depth-2
+						if (post.image)
+							.card-image(style="background-image: url(\"" + post.image + "\");")
+								span.card-title=post.title
+						.card-content
+							if (!post.image)
+								span.card-title=post.title
+							p=post.content
+						.card-action
+							a.indigo-text.waves-effect.btn-flat(href="#!", style="margin: -10px;") Read more
+	
+		.row.center
+			ul.pagination
+				li.disabled
+					a(href="#!")
+						i.material-icons chevron_left
+				li.active.indigo
+					a(href="#!") 1
+				li.waves-effect
+					a(href="#!") 2
+				li.waves-effect
+					a(href="#!") 3
+				li.waves-effect
+					a(href="#!") 4
+				li.waves-effect
+					a(href="#!")
+						i.material-icons chevron_right

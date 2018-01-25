@@ -1,5 +1,6 @@
 import express from 'express';
 import metaTags from '../middleware/meta-tags';
+import api from '../data/api';
 
 const router = express.Router();
 
@@ -28,5 +29,20 @@ router.get('/manage/editor', (req, res, next) => {
 	res.metatags({title: 'Editor'});
 	res.render("blog/editor");
 });
+
+router.get('/', (req, res, next) => {
+	api.getBlogPosts().then((posts) => {
+		res.locals.posts = posts.slice(0, 4);
+		res.render("blog/overview");
+	});
+});
+
+// import data from '../generated.json';
+//
+// data.forEach((post) => {
+// 	api.createBlogPost({input: post}).then((result) => {
+// 		console.log(result);
+// 	});
+// });
 
 module.exports = router;

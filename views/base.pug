@@ -3,8 +3,6 @@ html
 	head
 		title=title
 
-		link(rel="stylesheet", href="https://fonts.googleapis.com/icon?family=Material+Icons")
-		link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.3/css/materialize.min.css")
 		link(rel="stylesheet", href="/css/style.css")
 
 		block header
@@ -14,42 +12,62 @@ html
 			each content, name in metatags
 				meta(name=name, content=content)
 
-	body
-		main
-			nav.orange(role="navigation")
-				.nav-wrapper.container
+	body.indigo.lighten-4
+		.navbar-fixed
+			nav.indigo
+				.nav-wrapper.nav-container
 					a.brand-logo(href="#!") Blog
+					a.sidenav-trigger(href="#!", data-target="mobile")
+						i.material-icons menu
 					ul.right.hide-on-med-and-down
 						li
-							a(href="/home") Home
+							a(href="#!") Home
 						li
-							a(href="/blog") Blog
+							a(href="#!") Blog
+						li
+							if (user)
+								a.dropdown-trigger(href="#!", data-target="user-menu")
+									.valign-wrapper.logged-in
+										img.circle(src="/img/avatar.png")
+										=user.name
 
+								ul.dropdown-content#user-menu
+									li
+										a(href="#!")
+											i.material-icons settings
+											| Settings
+									li
+										a(href="#!")
+											i.material-icons power_settings_new
+											| Logout
+							else
+								a(href="#!") Login
 					ul.sidenav#mobile
 						li
-							a(href="/home") Home
+							a(href="#!") Home
 						li
-							a(href="/blog") Blog
+							a(href="#!") Blog
 
-					a.sidenav-trigger(href="#", data-target="mobile")
-						i.material-icons menu
-
+		main
 			block content
 
-		footer.page-footer.orange
+		footer.page-footer.grey.darken-3
 			.container
 				.row
 					.col.l6.s12
-						h5.white-text Footer content
-						p.grey-text.text-lighten-4 Hier komt een beetje tekst
-			.footer-copyright
-				.container
-					| &copy; 2018 Tim Huizinga
-					a.grey-text.text-lighten-4.right(href='https://mtgames.nl') Made with #[i.material-icons.tiny.red-text.text-darken-2 favorite] by Tim Huzinga
+						h5.white-text Footer Content
+						p.grey-text.text-lighten-4 Hier komt een korte beschijving
+					.col.l4.offset-l2.s12
+						h5.white-text Links
+						ul
+							li
+								a.grey-text.text-lighten-3(href="#!") Twitter
+							li
+								a.grey-text.text-lighten-3(href="#!") Facebook
+			.footer-copyright.grey.darken-4
+				.container &copy; 2018 Name Here
+					a.grey-text.text-lighten-4.right(href="http://mtgames.nl") Made with #[i.material-icons.tiny.red-text favorite] by #[em Tim Huizinga]
 
 		script(type="text/javascript", src="/js/bundle.js")
-		script.
-			var M = require('materialize-css');
-			M.Sidenav.init(document.querySelector('.sidenav'));
-
+		script(type="text/javascript", src="/js/main.js")
 		block scripts
