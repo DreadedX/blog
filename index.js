@@ -9,6 +9,7 @@ import LessPluginNpmImport from 'less-plugin-npm-import';
 import LessPluginAutoPrefix from 'less-plugin-autoprefix';
 import jwt from 'express-jwt';
 
+import metaTags from './middleware/meta-tags';
 import blog from './routes/blog';
 import api from './routes/api';
 
@@ -52,8 +53,18 @@ app.use(jwt({
 			return req.cookies.token;
 		}
 		return null;
-	}
+	},
 }));
+
+app.use((err, req, res, next) => {
+	if (err.name === "UnauthorizedError") {
+		// Just show the logged out version of the page
+		err = null;
+		// Tell the client to remove the invalid cookie
+		res.append('Set-Cookie', 'token=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Max-Age=-1;');
+	}
+	next(err);
+});
 
 const shared = ['materialize-css'];
 app.use('/js/bundle.js', babelify(shared));
@@ -61,11 +72,35 @@ app.use('/js/bundle.js', babelify(shared));
 app.use('/js/quill.js', babelify([{'quill/dist/quill.core': {expose: 'quill'} }]));
 shared.push('quill');
 
-app.use('/js/editor.js', babelify(__dirname + '/client/js/editor.js', {external: shared}));
+app.use('/js/axios.js', babelify(['axios'], {external: shared}));
+shared.push('axios');
+
 app.use('/js/main.js', babelify(__dirname + '/client/js/main.js', {external: shared}));
+app.use('/js/login.js', babelify(__dirname + '/client/js/login.js', {external: shared}));
+app.use('/js/editor.js', babelify(__dirname + '/client/js/editor.js', {external: shared}));
+
+app.use((req, res, next) => {
+	res.locals.originalUrl = req.originalUrl;
+	next();
+});
+
+// @todo We really need to get all of this from a database
+// Set the default tags for the site
+app.use(metaTags({
+	viewport: 'width=device-width, initial-scale=1.0',
+	description: 'Dit is de persoonlijke website van Helma Koot',
+	keyword: 'Helma, Koot, Office, Management, Blog', 
+	author: 'Helma Koot',
+	creator: '@HelmaKoot'
+}));
 
 app.use('/blog', blog);
 app.use('/api', api);
+
+// Redirect users to the blog until we actually have a homepage
+app.get('/', (req, res, next) => {
+	res.redirect('/blog');
+});
 
 app.use((req, res, next) => {
 	let err = new Error('Not Found');

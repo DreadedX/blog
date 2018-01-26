@@ -14,7 +14,7 @@ html
 
 	body.indigo.lighten-4
 		.navbar-fixed
-			nav.indigo
+			nav
 				.nav-wrapper.nav-container
 					a.brand-logo(href="#!") Blog
 					a.sidenav-trigger(href="#!", data-target="mobile")
@@ -38,10 +38,14 @@ html
 											| Settings
 									li
 										a(href="#!")
+											i.material-icons mode_edit
+											| Manage
+									li
+										a#logout(href="#!")
 											i.material-icons power_settings_new
 											| Logout
 							else
-								a(href="#!") Login
+								a(href="/api/login?redirect_uri=" + originalUrl) Login
 					ul.sidenav#mobile
 						li
 							a(href="#!") Home
@@ -55,15 +59,15 @@ html
 			.container
 				.row
 					.col.l6.s12
-						h5.white-text Footer Content
+						h5.grey-text.text-lighten-4 Footer Content
 						p.grey-text.text-lighten-4 Hier komt een korte beschijving
 					.col.l4.offset-l2.s12
 						h5.white-text Links
 						ul
 							li
-								a.grey-text.text-lighten-3(href="#!") Twitter
+								a.grey-text.text-lighten-4(href="#!") Twitter
 							li
-								a.grey-text.text-lighten-3(href="#!") Facebook
+								a.grey-text.text-lighten-4(href="#!") Facebook
 			.footer-copyright.grey.darken-4
 				.container &copy; 2018 Name Here
 					a.grey-text.text-lighten-4.right(href="http://mtgames.nl") Made with #[i.material-icons.tiny.red-text favorite] by #[em Tim Huizinga]

@@ -100,24 +100,24 @@ M.FloatingActionButton.init(fab, {
 
 quill.focus();
 
-let xhr = new XMLHttpRequest();
-xhr.responseType = 'json';
-xhr.open("POST", "/api");
-xhr.setRequestHeader("Content-Type", "application/json");
-xhr.setRequestHeader("Accept", "application/json");
-xhr.onload = function () {
-  console.log('Title:', xhr.response.data.post.title);
-  console.log('Content:', xhr.response.data.post.content);
-  console.log('Id:', xhr.response.data.post.id);
-}
-xhr.send(JSON.stringify({
-	query: `query ($id: String!) {
-		post: getBlogPost(id: $id) {
-			id
-			title
-			content
-		}
-	}`, variables: {
-		id: "5a679e1016ad083d8b3d9bd4"
-	}
-}));
+// let xhr = new XMLHttpRequest();
+// xhr.responseType = 'json';
+// xhr.open("POST", "/api");
+// xhr.setRequestHeader("Content-Type", "application/json");
+// xhr.setRequestHeader("Accept", "application/json");
+// xhr.onload = function () {
+//   console.log('Title:', xhr.response.data.post.title);
+//   console.log('Content:', xhr.response.data.post.content);
+//   console.log('Id:', xhr.response.data.post.id);
+// }
+// xhr.send(JSON.stringify({
+// 	query: `query ($id: String!) {
+// 		post: getBlogPost(id: $id) {
+// 			id
+// 			title
+// 			content
+// 		}
+// 	}`, variables: {
+// 		id: "5a679e1016ad083d8b3d9bd4"
+// 	}
+// }));

@@ -1,18 +1,7 @@
 import express from 'express';
-import metaTags from '../middleware/meta-tags';
 import api from '../data/api';
 
 const router = express.Router();
-
-// @todo We really need to get all of this from a database
-// Set the default tags for the site
-router.use(metaTags({
-	viewport: 'width=device-width, initial-scale=1.0',
-	description: 'Dit is de persoonlijke website van Helma Koot',
-	keyword: 'Helma, Koot, Office, Management, Blog', 
-	author: 'Helma Koot',
-	creator: '@Dreaded_X'
-}));
 
 router.get('/manage/editor', (req, res, next) => {
 	res.locals.toolbar = [
@@ -31,7 +20,8 @@ router.get('/manage/editor', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-	api.getBlogPosts().then((posts) => {
+	res.metatags({title: 'Blog'});
+	api.getPosts().then((posts) => {
 		res.locals.posts = posts.slice(0, 4);
 		res.render("blog/overview");
 	});
