@@ -27,6 +27,17 @@ router.get('/', (req, res, next) => {
 	});
 });
 
+router.get('/post/:id', (req, res, next) => {
+	api.getPost({id: req.params.id}).then((post) => {
+		res.metatags({title: post.title, description: post.content});
+		if (post.image) {
+			res.metatags({image: post.image});
+		}
+		res.locals.post = post
+		res.render("blog/post");
+	});
+});
+
 // import data from '../generated.json';
 //
 // data.forEach((post) => {

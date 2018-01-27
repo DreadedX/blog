@@ -29,7 +29,7 @@ document.querySelector('#login').onsubmit = (event) => {
 				response.data.errors.forEach((error) => {
 					for (let field in error.state) {
 						document.querySelector('#' + field + ' span').dataset.error = error.state[field];
-						document.querySelector('#' + field + ' input').className = 'invalid';
+						document.querySelector('#' + field + '-input').className = 'invalid';
 					}
 				});
 			}
@@ -37,11 +37,11 @@ document.querySelector('#login').onsubmit = (event) => {
 	});
 }
 
-document.querySelector('#username input').oninput = () => {
-	document.querySelector('#username input').className = '';
+document.querySelector('#username-input').oninput = () => {
+	document.querySelector('#username-input').className = '';
 }
-document.querySelector('#password input').oninput = () => {
-	document.querySelector('#password input').className = '';
+document.querySelector('#password-input').oninput = () => {
+	document.querySelector('#password-input').className = '';
 }
 
 const showLoader = () => {

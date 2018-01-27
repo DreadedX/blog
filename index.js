@@ -91,7 +91,8 @@ app.use(metaTags({
 	description: 'Dit is de persoonlijke website van Helma Koot',
 	keyword: 'Helma, Koot, Office, Management, Blog', 
 	author: 'Helma Koot',
-	creator: '@HelmaKoot'
+	creator: '@HelmaKoot',
+	locale: 'nl_NL'
 }));
 
 app.use('/blog', blog);

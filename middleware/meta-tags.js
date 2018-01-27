@@ -18,8 +18,18 @@ const process = (res, tags) => {
 				res.locals.metatags['twitter:description'] = tags[name];
 				break;
 
+			case 'image':
+				// @todo Make sure this gets the actual domain
+				let image = 'https://13a784db.ngrok.io' + tags[name];
+				res.locals.metatags['og:image'] = image;
+				res.locals.metatags['twitter:image'] = image;
+				break;
+
 			case 'creator':
 				res.locals.metatags['twitter:creator'] = tags[name];
+
+			case 'locale':
+				res.locals.metatags['og:locale'] = tags[name];
 
 			default:
 				res.locals.metatags[name] = tags[name];
