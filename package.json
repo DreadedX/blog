@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/www",
-    "auto-start": "nodemon --exec \"DEBUG=blog:* npm start\" --ignore views --ignore client"
+    "auto-start": "nodemon --exec \"set DEBUG=blog:* && npm start\" --ignore views --ignore client"
   },
   "keywords": [],
   "author": "",

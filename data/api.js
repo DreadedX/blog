@@ -46,6 +46,8 @@ const api = {
 			return array.map((post) => {
 				return new Post(post);
 			});
+		}).catch((err) => {
+			console.log(err);
 		});
 	},
 	getPost: ({id}) => {
@@ -56,6 +58,8 @@ const api = {
 				return new Post(result);
 			}
 			return null;
+		}).catch((err) => {
+			console.log(err);
 		});
 	},
 	createPost: ({input}) => {
@@ -63,6 +67,8 @@ const api = {
 			return col.insertOne(input);
 		}).then( (result) => {
 			return new Post(result.ops[0]);
+		}).catch((err) => {
+			console.log(err);
 		});
 	},
 	// Make sure we only update the provided fields
@@ -73,6 +79,8 @@ const api = {
 			});
 		}).then((result) => {
 			return new Post(result.value);
+		}).catch((err) => {
+			console.log(err);
 		});
 	},
 	// @todo we want to make sure we can really only call this from our own domain, other sites will have to use our login form
@@ -114,6 +122,8 @@ const api = {
 				});
 			}
 			return null;
+		}).catch((err) => {
+			console.log(err);
 		});
 	},
 	createUser: ({input}) => {
@@ -153,6 +163,8 @@ const api = {
 			let userData = new UserData(result.ops[0]);
 			userData.generateToken();
 			return userData;
+		}).catch((err) => {
+			console.log(err);
 		});
 	}
 };
