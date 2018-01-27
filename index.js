@@ -18,6 +18,8 @@ const app = express();
 const autoprefixPlugin = new LessPluginAutoPrefix({browsers: [">5%"]});
 const npmImportPlugin = new LessPluginNpmImport({prefix: "~"});
 
+app.set('trust proxy', 'loopback');
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
