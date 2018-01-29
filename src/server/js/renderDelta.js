@@ -5,16 +5,7 @@ const mutationObserver = require.resolve('mutation-observer');
 
 const scripts = [quill, mutationObserver];
 
-import Section from '../../shared/js/section';
-import Bold from '../../shared/js/bold';
-import Italic from '../../shared/js/italic';
-import Underline from '../../shared/js/underline';
-import Strike from '../../shared/js/strike';
-import Blockquote from '../../shared/js/blockquote';
-import Link from '../../shared/js/link';
-
-// const blots = [Bold, Italic, Underline, Strike, Blockquote, Link];
-const blots = [Section, Bold, Italic, Underline, Strike, Blockquote];
+import { register } from 'shared/blots';
 
 function render(delta) {
 	return new Promise((resolve, reject) => {
@@ -29,13 +20,7 @@ function render(delta) {
 				};
 			};
 
-			var Block = window.Quill.import('blots/block');
-			Block.tagName = 'p';
-			window.Quill.register(Block, true);
-
-			blots.forEach((blot) => {
-				window.Quill.register(blot(window.Quill));
-			});
+			register(window.Quill);
 
 			let quill = new window.Quill('#editor');
 

@@ -2,9 +2,9 @@ import { MongoClient, ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
-import ValidationError from './ValidationError';
+import ValidationError from 'server/ValidationError';
 
-import renderDelta from './renderDelta';
+import renderDelta from 'server/renderDelta';
 
 const saltRounds = 10;
 // @todo This needs to be replaced with a private key

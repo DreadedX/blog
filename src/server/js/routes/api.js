@@ -3,7 +3,7 @@ import GraphQLHTTP from 'express-graphql';
 import { buildSchema } from 'graphql';
 import fs from 'fs';
 import path from 'path';
-import api from '../api';
+import api from 'server/api';
 
 const router = express.Router();
 
@@ -16,7 +16,7 @@ router.get('/login', (req, res, next) => {
 	res.render("login");
 });
 
-let schema = buildSchema(fs.readFileSync(path.join(__dirname, 'schema.graphql'), 'utf8'));
+let schema = buildSchema(fs.readFileSync(path.join(__dirname, '..', '..', 'graphql', 'schema.graphql'), 'utf8'));
 
 router.use('/', GraphQLHTTP({
 	schema,

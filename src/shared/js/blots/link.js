@@ -1,4 +1,10 @@
-module.exports = (Quill) => {
+const settings = {
+	name: "link",
+	icon: "insert_link",
+	handler: "temp"
+}
+
+const register = (Quill) => {
 	let Inline = Quill.import('blots/inline');
 
 	class Link extends Inline {
@@ -25,7 +31,7 @@ module.exports = (Quill) => {
 			this.domNode.setAttribute('href', value);
 		}
 	}
-	Link.blotName = 'link';
+	Link.blotName = settings.name;
 	Link.tagName = 'a';
 	Link.SANITIZED_URL = 'about:blank';
 	Link.PROTOCOL_WHITELIST = ['http', 'https', 'mailto', 'tel'];
@@ -37,5 +43,10 @@ module.exports = (Quill) => {
 		return protocols.indexOf(protocol) > -1;
 	}
 
-	return Link;
+	Quill.register(Link);
+};
+
+module.exports = {
+	register: register,
+	settings: settings
 };

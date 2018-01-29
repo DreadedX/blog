@@ -2,24 +2,11 @@ import Quill from 'quill/dist/quill.core';
 import Delta from 'quill-delta';
 import axios from 'axios';
 
-import Section from './blots/section';
-import Bold from './blots/bold';
-import Italic from './blots/italic';
-import Underline from './blots/underline';
-import Strike from './blots/strike';
-import Blockquote from './blots/blockquote';
-import Link from './blots/link';
+import { register } from 'shared/blots';
 
-Quill.register(Section(Quill));
-Quill.register(Bold(Quill));
-Quill.register(Italic(Quill));
-Quill.register(Underline(Quill));
-Quill.register(Strike(Quill));
-Quill.register(Blockquote(Quill));
-Quill.register(Link(Quill));
+register(Quill);
 
 const quill = new Quill('#editor');
-const toolbar = document.querySelector('#toolbar');
 const fab = document.querySelector('#fab');
 const title = document.querySelector('#title');
 const date = document.querySelector('#date');

@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "babel-node ./bin/www",
-    "auto-start": "nodemon --exec \"DEBUG=blog:* npm start\" --ignore views --ignore client"
+    "auto-start": "nodemon --exec \"DEBUG=blog:* npm start\" --ignore src/server/views --ignore src/client"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
+    "babel-plugin-module-resolver": "^3.0.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
