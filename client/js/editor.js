@@ -1,8 +1,8 @@
-import Quill from 'quill';
+import Quill from 'quill/dist/quill.core';
 import Delta from 'quill-delta';
-// This is imported by the page
-// import M from 'materialize-css'
+import axios from 'axios';
 
+import Section from './blots/section';
 import Bold from './blots/bold';
 import Italic from './blots/italic';
 import Underline from './blots/underline';
@@ -10,12 +10,13 @@ import Strike from './blots/strike';
 import Blockquote from './blots/blockquote';
 import Link from './blots/link';
 
-Quill.register(Bold);
-Quill.register(Italic);
-Quill.register(Underline);
-Quill.register(Strike);
-Quill.register(Blockquote);
-Quill.register(Link);
+Quill.register(Section(Quill));
+Quill.register(Bold(Quill));
+Quill.register(Italic(Quill));
+Quill.register(Underline(Quill));
+Quill.register(Strike(Quill));
+Quill.register(Blockquote(Quill));
+Quill.register(Link(Quill));
 
 const quill = new Quill('#editor');
 const toolbar = document.querySelector('#toolbar');
@@ -100,24 +101,26 @@ M.FloatingActionButton.init(fab, {
 
 quill.focus();
 
-// let xhr = new XMLHttpRequest();
-// xhr.responseType = 'json';
-// xhr.open("POST", "/api");
-// xhr.setRequestHeader("Content-Type", "application/json");
-// xhr.setRequestHeader("Accept", "application/json");
-// xhr.onload = function () {
-//   console.log('Title:', xhr.response.data.post.title);
-//   console.log('Content:', xhr.response.data.post.content);
-//   console.log('Id:', xhr.response.data.post.id);
-// }
-// xhr.send(JSON.stringify({
-// 	query: `query ($id: String!) {
-// 		post: getBlogPost(id: $id) {
-// 			id
-// 			title
-// 			content
-// 		}
-// 	}`, variables: {
-// 		id: "5a679e1016ad083d8b3d9bd4"
-// 	}
-// }));
+global.quill = quill;
+
+document.querySelector('#save').onclick = () => {
+	axios.post('/api', {
+		query: `mutation($input: PostInput!) {
+			post: createPost(input: $input) {
+				id
+				title
+				content
+			}
+		}`,
+		variables: {
+			input: {
+				title: title.value,
+				delta: JSON.stringify(quill.getContents())
+			}
+		}
+	}).then((result) => {
+		console.log(result);
+	}).catch((err) => {
+		console.log(err);
+	});
+};

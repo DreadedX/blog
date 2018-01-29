@@ -1,0 +1,65 @@
+@import "materialize";
+@import "blog/overview";
+@import "blog/post";
+@import "login";
+
+// Footer always at bottom
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+main {
+	flex: 1 0 auto;
+}
+
+a {
+	outline: 0;
+}
+
+.navbar-fixed {
+	z-index: 9999;
+}
+
+@media #{$large-and-up} {
+	.nav-container {
+		margin-left: 15%;
+		margin-right: 15%;
+
+		.dropdown-content {
+			min-width: 150px;
+		}
+
+		.logged-in {
+			img {
+				margin-right: 10px;
+				width: 50px;
+			}
+		}
+	}
+}
+
+.card {
+	.card-title {
+		font-family: Roboto Slab, $font-stack
+	}
+
+	.card-content {
+		p {
+			line-height: 1.4rem;
+		}
+	}
+}
+
+.parallax {
+	height: 80vh;
+	background-attachment: scroll;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+
+	@media #{$large-and-up} {
+		background-attachment: fixed;
+		height: 90vh;
+	}
+}

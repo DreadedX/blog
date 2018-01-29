@@ -1,10 +1,15 @@
 import express from 'express';
+import ellipsize from 'ellipsize';
+
 import api from '../data/api';
+
+import render from '../render.js';
 
 const router = express.Router();
 
 router.get('/manage/editor', (req, res, next) => {
 	res.locals.toolbar = [
+		{name: 'section', icon_name: 'title', handler: 'toggleAttribute'},
 		{name: 'bold', icon_name: 'format_bold', handler: 'toggleAttribute'},
 		{name: 'italic', icon_name: 'format_italic', handler: 'toggleAttribute'},
 		{name: 'underline', icon_name: 'format_underline', handler: 'toggleAttribute'},
@@ -23,6 +28,9 @@ router.get('/', (req, res, next) => {
 	res.metatags({title: 'Blog'});
 	api.getPosts().then((posts) => {
 		res.locals.posts = posts.slice(0, 4);
+		res.locals.posts.forEach((post) => {
+			post.content = ellipsize(post.content, 200);
+		});
 		res.render("blog/overview");
 	});
 });
@@ -30,6 +38,22 @@ router.get('/', (req, res, next) => {
 router.get('/post/:id', (req, res, next) => {
 	api.getPost({id: req.params.id}).then((post) => {
 		res.metatags({title: post.title, description: post.content});
+		// TEST
+		// let delta = JSON.parse(post.content);
+        //
+		// render(delta).then((result) => {
+		// 	post.content = result;
+        //
+		// 	if (post.image) {
+		// 		res.metatags({image: post.image});
+		// 	}
+		// 	res.locals.post = post
+		// 	res.render("blog/post");
+		// }).catch((err) => {
+		// 	console.log(err);
+		// });
+		// TEST
+
 		if (post.image) {
 			res.metatags({image: post.image});
 		}

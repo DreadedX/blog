@@ -1,14 +1,14 @@
 extends ../base
 
 block content
-	.parallax
+	.parallax(style="background-image: url('/img/background.jpg');")
 	.container
 		.row
-			.col.s12.cards-container
+			.col.s12.blog-overview
 				for post in posts
-					.card.z-depth-2
+					.card.z-depth-3
 						if (post.image)
-							.card-image(style="background-image: url(\"" + post.image + "\");")
+							.card-image(style="background-image: url('" + post.image + "');")
 								span.card-title=post.title
 						.card-content
 							if (!post.image)

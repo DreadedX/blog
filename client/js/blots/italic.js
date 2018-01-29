@@ -1,9 +1,9 @@
-import Quill from 'quill';
+module.exports = (Quill) => {
+	let Inline = Quill.import('blots/inline');
 
-let Inline = Quill.import('blots/inline');
+	class Italic extends Inline {}
+	Italic.blotName = 'italic';
+	Italic.tagName = 'em';
 
-class Italic extends Inline {}
-Italic.blotName = 'italic';
-Italic.tagName = 'i';
-
-module.exports = Italic;
+	return Italic;
+};

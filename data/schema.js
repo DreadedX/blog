@@ -6,7 +6,7 @@ var schema = buildSchema(`
 		"Updated title (Required for creating a post)"
 		title: String
 		"Updated content (Required for creating a post)"
-		content: String
+		delta: String
 		"Updated header image"
 		image: String
 	}
@@ -14,6 +14,9 @@ var schema = buildSchema(`
 	type Post {
 		id: String!
 		title: String!
+		"Delta representation of the content"
+		delta: String!
+		"Rendered Delta"
 		content: String!
 		"Optional header image"
 		image: String

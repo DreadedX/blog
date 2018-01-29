@@ -32,6 +32,8 @@ block content
 							i , 
 							i#card-time 18:30
 
+				button#save Save
+
 			.fixed-action-btn.toolbar#fab
 				a.btn-floating.btn-large.blue
 					i.large.material-icons mode_edit
@@ -45,5 +47,7 @@ block content
 			.spacer
 
 block scripts
+	// @todo Why not just bundle quill with the editor
 	script(type="text/javascript", src="/js/quill.js")
+	script(type="text/javascript", src="/js/axios.js")
 	script(type="text/javascript", src="/js/editor.js")

@@ -25,7 +25,7 @@ html
 		// 		}
 		// 	}
 
-	body.indigo.lighten-4
+	body.base.lighten-4
 		.navbar-fixed
 			nav
 				.nav-wrapper.nav-container
@@ -53,17 +53,18 @@ html
 										a(href="#!")
 											i.material-icons mode_edit
 											| Manage
+									li.divider
 									li
 										a#logout(href="#!")
 											i.material-icons power_settings_new
 											| Logout
 							else
 								a(href="/api/login?redirect_uri=" + originalUrl) Login
-					ul.sidenav#mobile
-						li
-							a(href="#!") Home
-						li
-							a(href="#!") Blog
+			ul.sidenav#mobile
+				li
+					a(href="#!") Home
+				li
+					a(href="#!") Blog
 
 		main
 			block content

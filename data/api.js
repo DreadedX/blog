@@ -2,7 +2,9 @@ import { MongoClient, ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
-import ValidationError from './ValidationError'
+import ValidationError from './ValidationError';
+
+import render from '../render';
 
 const saltRounds = 10;
 // @todo This needs to be replaced with a private key
@@ -22,18 +24,24 @@ class UserData {
 }
 
 class Post {
-	constructor({_id, title, content, image}) {
+	constructor({_id, title, delta, content, image}) {
 		this.id = _id;
 		this.title = title;
+		this.delta = delta;
 		this.content = content;
 		this.image = image;
 	}
 };
 
+// @todo We need to close the client after usage
 const getCollection = (name) => {
 	return MongoClient.connect(process.env.MONGOURL).then( (client) => {
 		return client.db('blog').collection(name);
 	});
+};
+
+const renderDelta = (delta) => {
+	return render(JSON.parse(delta));
 };
 
 const api = {
@@ -42,8 +50,8 @@ const api = {
 			return col.find({});
 		}).then((result) => {
 			return result.toArray();
-		}).then((array) => {
-			return array.map((post) => {
+		}).then((result) => {
+			return result.map((post) => {
 				return new Post(post);
 			});
 		});
@@ -59,15 +67,21 @@ const api = {
 		});
 	},
 	createPost: ({input}) => {
-		return getCollection('posts').then((col) => {
+		return renderDelta(input.delta).then((result) => {
+			input.content = result;
+			return getCollection('posts');
+		}).then((col) => {
 			return col.insertOne(input);
-		}).then( (result) => {
+		}).then((result) => {
 			return new Post(result.ops[0]);
 		});
 	},
 	// Make sure we only update the provided fields
 	updatePost: ({id, input}) => {
-		return getCollection('posts').then((col) => {
+		return renderDelta(input.delta).then((result) => {
+			input.content = result;
+			return getCollection('posts');
+		}).then((col) => {
 			return col.findOneAndUpdate({_id: ObjectId(id)}, input, {
 				returnOriginal: false
 			});
@@ -78,8 +92,6 @@ const api = {
 	// @todo we want to make sure we can really only call this from our own domain, other sites will have to use our login form
 	loginUser: ({input}) => {
 		let errors = [];
-		let test_user = "Dreaded_X";
-		let test_pass = "$2a$10$JTy7qxsMqNYvHlxD71GnX.O7EEaf6recWCaWYEYR1mf9HlVHFBA8y";
 
 		if (validator.isEmpty(input.username)) {
 			errors.push({key: 'username', message: 'No username provided.'});
