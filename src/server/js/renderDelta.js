@@ -5,13 +5,13 @@ const mutationObserver = require.resolve('mutation-observer');
 
 const scripts = [quill, mutationObserver];
 
-import Section from './client/js/blots/section';
-import Bold from './client/js/blots/bold';
-import Italic from './client/js/blots/italic';
-import Underline from './client/js/blots/underline';
-import Strike from './client/js/blots/strike';
-import Blockquote from './client/js/blots/blockquote';
-import Link from './client/js/blots/link';
+import Section from '../../shared/js/section';
+import Bold from '../../shared/js/bold';
+import Italic from '../../shared/js/italic';
+import Underline from '../../shared/js/underline';
+import Strike from '../../shared/js/strike';
+import Blockquote from '../../shared/js/blockquote';
+import Link from '../../shared/js/link';
 
 // const blots = [Bold, Italic, Underline, Strike, Blockquote, Link];
 const blots = [Section, Bold, Italic, Underline, Strike, Blockquote];
@@ -48,4 +48,6 @@ function render(delta) {
 	});
 }
 
-module.exports = render;
+module.exports = (delta) => {
+	return render(JSON.parse(delta));
+};

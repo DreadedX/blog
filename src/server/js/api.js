@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import validator from 'validator';
 import ValidationError from './ValidationError';
 
-import render from '../render';
+import renderDelta from './renderDelta';
 
 const saltRounds = 10;
 // @todo This needs to be replaced with a private key
@@ -38,10 +38,6 @@ const getCollection = (name) => {
 	return MongoClient.connect(process.env.MONGOURL).then( (client) => {
 		return client.db('blog').collection(name);
 	});
-};
-
-const renderDelta = (delta) => {
-	return render(JSON.parse(delta));
 };
 
 const api = {

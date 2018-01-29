@@ -1,9 +1,7 @@
 import express from 'express';
 import ellipsize from 'ellipsize';
 
-import api from '../data/api';
-
-import render from '../render.js';
+import api from '../api';
 
 const router = express.Router();
 
@@ -38,36 +36,14 @@ router.get('/', (req, res, next) => {
 router.get('/post/:id', (req, res, next) => {
 	api.getPost({id: req.params.id}).then((post) => {
 		res.metatags({title: post.title, description: post.content});
-		// TEST
-		// let delta = JSON.parse(post.content);
-        //
-		// render(delta).then((result) => {
-		// 	post.content = result;
-        //
-		// 	if (post.image) {
-		// 		res.metatags({image: post.image});
-		// 	}
-		// 	res.locals.post = post
-		// 	res.render("blog/post");
-		// }).catch((err) => {
-		// 	console.log(err);
-		// });
-		// TEST
 
 		if (post.image) {
 			res.metatags({image: post.image});
 		}
+
 		res.locals.post = post
 		res.render("blog/post");
 	});
 });
-
-// import data from '../generated.json';
-//
-// data.forEach((post) => {
-// 	api.createBlogPost({input: post}).then((result) => {
-// 		console.log(result);
-// 	});
-// });
 
 module.exports = router;
