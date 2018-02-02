@@ -27,14 +27,6 @@
 			background-position: center;
 			border-top-left-radius: 2px;
 			border-top-right-radius: 2px;
-
-			.card-title {
-				text-shadow:
-					-1px -1px 0 #000,
-					1px -1px 0 #000,
-					-1px 1px 0 #000,
-					1px 1px 0 #000;
-			}
 		}
 
 		.card-action {
@@ -45,3 +37,11 @@
 	}
 }
 
+.darken {
+	background-image:
+		linear-gradient(
+			rgba(0, 0, 0, 0.5),
+			rgba(0, 0, 0, 0.5)
+		),
+		url
+}

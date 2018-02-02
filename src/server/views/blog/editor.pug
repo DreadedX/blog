@@ -8,7 +8,7 @@ block content
 		.section
 			.row
 				.input-field.col.l7.s12
-					input.validate#title(type="text")
+					input#title(type="text")
 					label(for="title") Title
 				.input-field.col.l3.s9
 					input.datepicker#date(type="text" readonly)
@@ -22,11 +22,11 @@ block content
 							input.filled-in(type="checkbox", checked="checked")
 							span 
 
-				.col.l8.offset-l2.s12
-					.card
+				.col.l10.offset-l1.m12.blog-post.editor
+					.card.z-depth-5
 						.card-content
 							span.card-title Title
-							#editor(placeholder="test")
+							#editor(data-post_id=post_id)
 						.card-action
 							i#card-date Zaterdag, 20 januari 2018
 							i , 
@@ -43,8 +43,6 @@ block content
 							li.waves-effect.waves-light
 								a.toolbar-item(href="#!", data-name=item.name, data-handler=item.handler)
 									i.material-icons=item.icon
-
-			.spacer
 
 block scripts
 	// @todo Why not just bundle quill with the editor

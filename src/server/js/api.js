@@ -6,6 +6,9 @@ import ValidationError from 'server/ValidationError';
 
 import renderDelta from 'server/renderDelta';
 
+import striptags from 'striptags';
+import ellipsize from 'ellipsize';
+
 const saltRounds = 10;
 // @todo This needs to be replaced with a private key
 const secret = 'test';
@@ -24,11 +27,12 @@ class UserData {
 }
 
 class Post {
-	constructor({_id, title, delta, content, image}) {
+	constructor({_id, title, delta, content, preview, image}) {
 		this.id = _id;
 		this.title = title;
 		this.delta = delta;
 		this.content = content;
+		this.preview = preview;
 		this.image = image;
 	}
 };
@@ -65,6 +69,7 @@ const api = {
 	createPost: ({input}) => {
 		return renderDelta(input.delta).then((result) => {
 			input.content = result;
+			input.preview = ellipsize(striptags(result), 200);
 			return getCollection('posts');
 		}).then((col) => {
 			return col.insertOne(input);
@@ -76,6 +81,7 @@ const api = {
 	updatePost: ({id, input}) => {
 		return renderDelta(input.delta).then((result) => {
 			input.content = result;
+			input.preview = ellipsize(striptags(result), 200);
 			return getCollection('posts');
 		}).then((col) => {
 			return col.findOneAndUpdate({_id: ObjectId(id)}, input, {

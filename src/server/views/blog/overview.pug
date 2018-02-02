@@ -8,12 +8,12 @@ block content
 				for post in posts
 					.card.z-depth-3
 						if (post.image)
-							.card-image(style="background-image: url('" + post.image + "');")
+							.card-image.darken(style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('" + post.image + "');")
 								span.card-title=post.title
 						.card-content
 							if (!post.image)
 								span.card-title=post.title
-							p=post.content
+							p=post.preview
 						.card-action
 							a.waves-effect.btn-flat(href="/blog/post/" + post.id) Read more
 	

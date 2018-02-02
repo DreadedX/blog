@@ -1,13 +1,17 @@
+$bottom-spacer: 15vh;
+$distance-top: 7vh;
+$distance-top-image: -75vh;
+
 .blog-post {
 	.card {
 		position: relative;
 		&.with-image {
-			top: -75vh;
-			margin-bottom: -75vh;
+			top: $distance-top-image;
+			margin-bottom: $distance-top-image + $bottom-spacer;
 		}
 		&.without-image {
 			top: 7vh;
-			margin-bottom: 7vh;
+			margin-bottom: $distance-top + $bottom-spacer;
 		}
 
 		.card-title {
@@ -22,6 +26,10 @@
 		p {
 			margin-bottom: 1.3rem;
 			font-size: 1.1rem;
+		}
+
+		blockquote {
+			font-style: italic;
 		}
 	}
 }

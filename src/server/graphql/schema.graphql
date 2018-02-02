@@ -1,9 +1,9 @@
 "Only the field that are specified will be updated"
 input PostInput {
 	"Updated title (Required for creating a post)"
-	title: String
+	title: String!
 	"Updated content (Required for creating a post)"
-	delta: String
+	delta: String!
 	"Updated header image"
 	image: String
 }
@@ -15,6 +15,8 @@ type Post {
 	delta: String!
 	"Rendered Delta"
 	content: String!
+	"Preview text"
+	preview: String!
 	"Optional header image"
 	image: String
 }

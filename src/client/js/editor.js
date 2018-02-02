@@ -19,6 +19,10 @@ const placeholderTitle = cardTitle.textContent;
 
 const handler = {};
 handler.toggleAttribute = (name, value) => quill.format(name, !value, Quill.sources.USER);
+handler.insertLink = (name, value) => {
+	value = prompt("URL");
+	quill.format(name, value, Quill.sources.USER);
+};
 handler.temp = (name) => console.log(name);
 
 document.querySelectorAll('.toolbar-item').forEach((toolbarItem) => {
@@ -57,7 +61,6 @@ M.Timepicker.init(time, {
 });
 
 time.onchange = () => {
-	console.log('test');
 	let value = time.value;
 	if (value) {
 		cardTime.textContent = value;
@@ -90,23 +93,62 @@ quill.focus();
 
 global.quill = quill;
 
-document.querySelector('#save').onclick = () => {
+let postId = document.querySelector('#editor').dataset.post_id;
+
+if (postId) {
 	axios.post('/api', {
-		query: `mutation($input: PostInput!) {
-			post: createPost(input: $input) {
-				id
+		query: `query($id: String!) {
+			post: getPost(id: $id) {
 				title
-				content
+				delta
 			}
 		}`,
 		variables: {
-			input: {
-				title: title.value,
-				delta: JSON.stringify(quill.getContents())
-			}
+			id: postId
 		}
-	}).then((result) => {
-		console.log(result);
+	}).then((response) => {
+		let post = response.data.data.post;
+		quill.setContents(JSON.parse(post.delta));
+		title.value = post.title;
+		title.oninput();
+	});
+}
+
+document.querySelector('#save').onclick = () => {
+	let request = {};
+	if (postId) {
+		request.query = `mutation($id: String!, $input: PostInput!) {
+			post: updatePost(id: $id, input: $input) {
+				id
+			}
+		}`;
+	} else {
+		request.query = `mutation($input: PostInput!) {
+			post: createPost(input: $input) {
+				id
+			}
+		}`;
+	}
+
+	request.variables = {
+		input: {
+			title: title.value,
+			delta: JSON.stringify(quill.getContents())
+		},
+		id: postId
+	};
+
+	axios.post('/api', request).then((response) => {
+		if (response.data.data.post) {
+			let post = response.data.data.post;
+			if (!postId) {
+				history.pushState(post.id, 'Editor', `/blog/manage/editor/${post.id}`);
+			}
+			postId = post.id;
+			console.log(post);
+		} else {
+			throw response;
+		}
 	}).catch((err) => {
 		console.log(err);
 	});

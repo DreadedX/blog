@@ -1,12 +1,12 @@
 import express from 'express';
-import ellipsize from 'ellipsize';
 
 import api from 'server/api';
 import { toolbar } from 'shared/blots';
 
 const router = express.Router();
 
-router.get('/manage/editor', (req, res, next) => {
+router.get('/manage/editor/:id?', (req, res, next) => {
+	res.locals.post_id = req.params.id;
 	res.locals.toolbar = toolbar;
 	res.metatags({title: 'Editor'});
 	res.render("blog/editor");
@@ -16,9 +16,6 @@ router.get('/', (req, res, next) => {
 	res.metatags({title: 'Blog'});
 	api.getPosts().then((posts) => {
 		res.locals.posts = posts.slice(0, 4);
-		res.locals.posts.forEach((post) => {
-			post.content = ellipsize(post.content, 200);
-		});
 		res.render("blog/overview");
 	});
 });

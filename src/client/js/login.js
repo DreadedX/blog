@@ -20,16 +20,15 @@ document.querySelector('#login').onsubmit = (event) => {
 			let maxAge = (24*60*60);
 			let d = new Date();
 			d.setTime(d.getTime() + maxAge * 1000);
-			let expires = 'Expires=' + d.toUTCString();
-			document.cookie = 'token=' + response.data.data.user.token + '; Path=/; Expires=' + expires + '; Max-Age=' + maxAge + ';';
+			document.cookie = `token=${response.data.data.user.token}; Path=/; Expires=${d.toUTCString()}; Max-Age=${maxAge};`;
 			window.location.replace(document.querySelector('#login').dataset.redirect_uri);
 		} else {
 			hideLoader();
 			if (response.data.errors) {
 				response.data.errors.forEach((error) => {
 					for (let field in error.state) {
-						document.querySelector('#' + field + ' span').dataset.error = error.state[field];
-						document.querySelector('#' + field + '-input').className = 'invalid';
+						document.querySelector(`#${field} span`).dataset.error = error.state[field];
+						document.querySelector(`#${field}-input`).className = 'invalid';
 					}
 				});
 			}

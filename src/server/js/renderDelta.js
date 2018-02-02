@@ -5,7 +5,7 @@ const mutationObserver = require.resolve('mutation-observer');
 
 const scripts = [quill, mutationObserver];
 
-import { register } from 'shared/blots';
+import blots from 'shared/blots';
 
 function render(delta) {
 	return new Promise((resolve, reject) => {
@@ -20,7 +20,7 @@ function render(delta) {
 				};
 			};
 
-			register(window.Quill);
+			blots.register(window.Quill);
 
 			let quill = new window.Quill('#editor');
 

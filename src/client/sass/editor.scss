@@ -1,10 +1,12 @@
-.spacer {
-	min-height: 15vh;
-}
-
 #editor {
 	min-height: 60vh;
 	height: 100%;
+}
+
+.editor {
+	.card {
+		margin-bottom: 15vh;
+	}
 }
 
 .ql-container {
