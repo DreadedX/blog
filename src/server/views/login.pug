@@ -1,0 +1,46 @@
+doctype html
+html
+	head
+		title=title
+
+		link(rel="stylesheet", href="/css/style.css")
+
+		block header
+
+		meta(charset="UTF-8")
+		if (metatags)
+			each content, name in metatags
+				meta(name=name, content=content)
+	body
+		center.login
+			.card.login.z-depth-2
+				form#login(data-redirect_uri=redirect_uri)
+					.card-content.scale-transition.scale-out#loader(style="height:0px;top:150px;")
+						.preloader-wrapper.big.active(style="top:150px;")
+							.spinner-layer
+								.circle-clipper.left
+									.circle
+								.gap-patch
+									.circle
+								.circle-clipper.right
+									.circle
+
+					.card-content.scale-transition#form
+						.card-title Blog Login
+						.input-field#username
+							input#username-input(type='text')
+							label(for="username-input") Username
+							span.helper-text
+						.input-field#password
+							input#password-input(type='password')
+							label(for="password-input") Password
+							span.helper-text
+						.row
+							center
+								button.col.s12.waves-effect.btn-large(type="submit") Login
+
+		script(type="text/javascript", src="/js/bundle.js")
+		script(type="text/javascript", src="/js/axios.js")
+		script(type="text/javascript", src="/js/login.js")
+		script.
+			var M = require('materialize-css');

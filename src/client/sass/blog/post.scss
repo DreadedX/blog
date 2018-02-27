@@ -1,0 +1,36 @@
+$bottom-spacer: 15vh;
+$distance-top: 7vh;
+$distance-top-image: -75vh;
+
+.blog-post {
+	.card {
+		position: relative;
+		&.with-image {
+			top: $distance-top-image;
+			margin-bottom: $distance-top-image + $bottom-spacer;
+		}
+		&.without-image {
+			top: 7vh;
+			margin-bottom: $distance-top + $bottom-spacer;
+		}
+
+		.card-title {
+			font-size: 2.5rem;
+			line-height: 2.7rem !important;
+		}
+
+		h5 {
+			margin-bottom: 0.2rem;
+		}
+
+		p {
+			margin-bottom: 1.3rem;
+			font-size: 1.1rem;
+		}
+
+		blockquote {
+			font-style: italic;
+		}
+	}
+}
+

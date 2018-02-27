@@ -1,0 +1,61 @@
+"Only the field that are specified will be updated"
+input PostInput {
+	"Updated title (Required for creating a post)"
+	title: String!
+	"Updated content (Required for creating a post)"
+	delta: String!
+	"Updated header image"
+	image: String
+}
+
+type Post {
+	id: String!
+	title: String!
+	"Delta representation of the content"
+	delta: String!
+	"Rendered Delta"
+	content: String!
+	"Preview text"
+	preview: String!
+	"Optional header image"
+	image: String
+}
+
+input LoginInput {
+	username: String!
+	password: String!
+}
+
+input CreateUserInput {
+	username: String!
+	password: String!
+	email: String!
+}
+
+type UserData {
+	id: String!
+	username: String!
+	email: String!
+	"Only if the user has selected an avatar"
+	avatar: String
+	"Only on login"
+	token: String
+}
+
+type Query {
+	"Returns null if post was not found"
+	getPost(id: String!): Post
+	"Returns null if no posts where found"
+	getPosts: [Post]
+	"Returns null if the login details are wrong"
+	loginUser(input: LoginInput!): UserData
+}
+
+type Mutation {
+	"Returns null if creation of the post failed"
+	createPost(input: PostInput!): Post
+	"Returns null if update of the post failed"
+	updatePost(id: String!, input: PostInput!): Post
+	"Return null if the creation failed"
+	createUser(input: CreateUserInput): UserData
+}

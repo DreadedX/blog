@@ -1,0 +1,52 @@
+@import "https://fonts.googleapis.com/css?family=Roboto+Slab|Roboto:400,400i,500";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+// @todo Not the best way to import using a path
+@import "./node_modules/materialize-css/sass/components/color-variables";
+
+@import "settings";
+
+$colors: (
+  "materialize-red": $materialize-red,
+  "red": $red,
+  "pink": $pink,
+  "purple": $purple,
+  "deep-purple": $deep-purple,
+  "indigo": $indigo,
+  "blue": $blue,
+  "light-blue": $light-blue,
+  "cyan": $cyan,
+  "teal": $teal,
+  "green": $green,
+  "light-green": $light-green,
+  "lime": $lime,
+  "yellow": $yellow,
+  "amber": $amber,
+  "orange": $orange,
+  "deep-orange": $deep-orange,
+  "brown": $brown,
+  "blue-grey": $blue-grey,
+  "grey": $grey,
+  "base": $base-color,
+  "shades": $shades
+);
+
+@function color($color, $type) {
+  @if map-has-key($colors, $color) {
+    $curr_color: map-get($colors, $color);
+    @if map-has-key($curr_color, $type) {
+      @return map-get($curr_color, $type);
+    }
+  }
+  @warn "Unknown `#{$color}` - `#{$type}` in $colors.";
+  @return null;
+}
+
+
+$primary-color: color("base", "base");
+$secondary-color: color("base", "base");
+$card-link-color: color("base", "accent-1");
+
+$font-stack: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+// @todo Not the best way to import using a path
+@import "./node_modules/materialize-css/sass/materialize";

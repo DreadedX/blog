@@ -2,18 +2,12 @@
 
 var app = require('../index');
 var debug = require('debug')('blog:server');
-var spdy = require('spdy');
-var fs = require('fs');
+var http = require('http');
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-var options = {
-	key: fs.readFileSync('./server.key'),
-	cert: fs.readFileSync('./server.crt')
-};
-
-var server = spdy.createServer(options, app);
+var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);

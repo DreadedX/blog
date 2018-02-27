@@ -1,0 +1,51 @@
+extends ../base
+
+block header
+	link(rel="stylesheet", href="/css/editor.css")
+
+block content
+	.container
+		.section
+			.row
+				.input-field.col.l7.s12
+					input#title(type="text")
+					label(for="title") Title
+				.input-field.col.l3.s9
+					input.datepicker#date(type="text" readonly)
+					label(for="date") Publish on
+				.input-field.col.l1.s2
+					input.timepicker#time(type="text" readonly)
+					label(for="time") At
+				.col.s1.valign-wrapper
+					p
+						label
+							input.filled-in(type="checkbox", checked="checked")
+							span 
+
+				.col.l10.offset-l1.m12.blog-post.editor
+					.card.z-depth-5
+						.card-content
+							span.card-title Title
+							#editor(data-post_id=post_id)
+						.card-action
+							i#card-date Zaterdag, 20 januari 2018
+							i , 
+							i#card-time 18:30
+
+				button#save Save
+
+			.fixed-action-btn.toolbar#fab
+				a.btn-floating.btn-large.blue
+					i.large.material-icons mode_edit
+				ul#toolbar
+					if (toolbar)
+						each item in toolbar
+							li.waves-effect.waves-light
+								a.toolbar-item(href="#!", data-name=item.name, data-handler=item.handler)
+									i.material-icons=item.icon
+
+block scripts
+	// @todo Why not just bundle quill with the editor
+	script(type="text/javascript", src="/js/quill.js")
+	script(type="text/javascript", src="/js/axios.js")
+	script(type="text/javascript", src="/js/editor.js")

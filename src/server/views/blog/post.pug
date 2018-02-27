@@ -1,0 +1,12 @@
+extends ../base
+
+block content
+	if (post.image)
+		.parallax(style="background-image: url('" + post.image + "');")
+	.container
+		.row
+			.col.l10.offset-l1.m12.blog-post
+				.card.z-depth-5(class=post.image ? "with-image" : "without-image")
+					.card-content
+						span.card-title=post.title
+						div!=post.content
